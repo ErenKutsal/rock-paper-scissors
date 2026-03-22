@@ -1,12 +1,13 @@
 #include "include.hpp"
 
 const float PI = glm::pi<float>();
+int simulation_speed = 1;
 
 const float radius = 0.01f;
 const int circle_segments = 32;
 const int num_vertices = circle_segments + 2;
-
 glm::vec3 vertices[num_vertices];
+
 GLuint vao, vbo;
 GLuint program;
 GLint mvp_loc, color_loc;
@@ -15,10 +16,10 @@ const int GROUP_SIZE = 100;
 const int NO_OBJECTS = 3 * GROUP_SIZE;
 std::vector<Object> objects;
 
-glm::vec3 colors[3] = {glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)};
-
 glm::mat4 view = glm::mat4(1.0f);
 glm::mat4 proj = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+
+glm::vec3 colors[3] = {glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)};
 
 void generate_circle()
 {
@@ -211,8 +212,6 @@ void resolve_collisions()
 
 void update(float dt)
 {
-    int simulation_speed = 1;
-
     // Run the physics/collision logic multiple times per frame
     for (int step = 0; step < simulation_speed; step++)
     {
