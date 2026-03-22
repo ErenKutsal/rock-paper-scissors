@@ -1,32 +1,21 @@
-#define GL_SILENCE_DEPRECATION
-
-#include <GLFW/glfw3.h>
-#include <OpenGL/gl3.h>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/constants.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <iterator>
-#include <random>
-#include <vector>
-
-#include "InitShader.h"
+#include "include.hpp"
 
 const float PI = glm::pi<float>();
 
 const float radius = 0.01f;
-
 const int circle_segments = 32;
 const int num_vertices = circle_segments + 2;
-glm::vec3 vertices[num_vertices];
 
+glm::vec3 vertices[num_vertices];
 GLuint vao, vbo;
 GLuint program;
 GLint mvp_loc, color_loc;
 
 const int GROUP_SIZE = 100;
 const int NO_OBJECTS = 3 * GROUP_SIZE;
+std::vector<Object> objects;
+
+glm::vec3 colors[3] = {glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)};
 
 glm::mat4 view = glm::mat4(1.0f);
 glm::mat4 proj = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
@@ -46,12 +35,12 @@ void generate_circle()
     }
 }
 
-enum class Type
+typedef enum
 {
-    ROCK,
-    PAPER,
-    SCISSORS
-};
+    ROCK = 0,
+    PAPER = 1,
+    SCISSORS = 2
+} Type;
 
 static std::random_device rd;
 static std::mt19937 gen(rd());
@@ -60,42 +49,20 @@ std::uniform_real_distribution<float> dist(0.0f, 1.0f);
 struct Object
 {
     glm::vec2 position;
-    float speed;
-    float angle;
+    glm::vec2 velocity;
     Type type;
 
     Object(Type type_)
     {
         type = type_;
-        speed = 0.3f;
-        angle = dist(gen) * 2 * PI;
-        switch (type_)
-        {
-            case Type::ROCK:
-                // 1st quadrant
-                position.x = dist(gen);
-                position.y = dist(gen);
-                break;
-            case Type::PAPER:
-                // 2nd quadrant
-                position.x = -dist(gen);
-                position.y = dist(gen);
-                break;
-            case Type::SCISSORS:
-                // 3rd quadrant
-                position.x = -dist(gen);
-                position.y = -dist(gen);
-                break;
-            default:
-                position.x = dist(gen);
-                position.y = dist(gen);
-                break;
-        }
-    }
+        float start_speed = dist(gen) / 50;  // [0, 0.02]
+        float start_angle = dist(gen) * 2 * PI;
+        velocity = glm::vec2(start_speed * cosf(start_angle), start_speed * sinf(start_angle));
 
-    Object(glm::vec2 position_, float speed_, float angle_, Type type_)
-        : position(position_), speed(speed_), angle(angle_), type(type_)
-    {
+        float width = 2.0f / 3.0f;
+        float x = dist(gen) * width - 1.0f + type * width;
+        float y = dist(gen) * 2 - 1;
+        position = glm::vec2(x, y);
     }
 
     bool is_colliding(const Object& other)
@@ -119,8 +86,6 @@ struct Object
 
     void update_object(float dt)
     {
-        float d_speed = speed * dt;
-        glm::vec2 velocity(d_speed * cosf(angle), d_speed * sinf(angle));
         position += velocity;
 
         if (position.x - radius <= -1.0)
@@ -128,14 +93,12 @@ struct Object
             // Snap to the left wall
             position.x = -1.0 + radius;
             velocity.x = -velocity.x;
-            angle += PI;
         }
         else if (position.x + radius >= 1.0)
         {
             // Snap to the right wall
             position.x = 1.0 - radius;
             velocity.x = -velocity.x;
-            angle += PI;
         }
 
         if (position.y - radius <= -1.0)
@@ -143,38 +106,22 @@ struct Object
             // Snap to the bottom
             position.y = -1.0 + radius;
             velocity.y = -velocity.y;
-            angle += PI;
         }
         else if (position.y + radius >= 1.0)
         {
             // Snap to the ceiling
             position.y = 1.0 - radius;
             velocity.y = -velocity.y;
-            angle += PI;
         }
     }
 
     void display_object()
     {
         glm::vec3 color;
-        switch (type)
-        {
-            case Type::ROCK:
-                color = glm::vec3(1.0f, 0.0f, 0.0f);
-                break;
-            case Type::PAPER:
-                color = glm::vec3(0.0f, 1.0f, 0.0f);
-                break;
-            case Type::SCISSORS:
-                color = glm::vec3(0.0f, 0.0f, 1.0f);
-                break;
-            default:
-                color = glm::vec3(0.0f, 0.0f, 0.0f);
-                break;
-        }
+        color = colors[type];
 
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(position.x, position.y, 0.0f));
+        model = glm::translate(model, glm::vec3(position, 0.0f));
 
         glm::mat4 mvp = proj * view * model;
 
@@ -184,8 +131,6 @@ struct Object
         glDrawArrays(GL_TRIANGLE_FAN, 0, num_vertices);
     }
 };
-
-std::vector<Object> entities;
 
 void init()
 {
@@ -209,40 +154,25 @@ void init()
     mvp_loc = glGetUniformLocation(program, "MVP");
     color_loc = glGetUniformLocation(program, "objectColor");
 
-    entities.reserve(NO_OBJECTS);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
+    objects.reserve(NO_OBJECTS);
     for (int i = 0; i < GROUP_SIZE; i++)
     {
-        entities.push_back(Object(Type::ROCK));
-        entities.push_back(Object(Type::PAPER));
-        entities.push_back(Object(Type::SCISSORS));
+        objects.push_back(Object(Type::ROCK));
+        objects.push_back(Object(Type::PAPER));
+        objects.push_back(Object(Type::SCISSORS));
     }
-
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-}
-
-void display(void)
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    for (auto& object : entities)
-    {
-        object.display_object();
-    }
-
-    glFinish();
 }
 
 void resolve_collisions()
 {
-    for (auto it1 = entities.begin(); it1 != entities.end(); ++it1)
+    for (auto it1 = objects.begin(); it1 != objects.end(); it1++)
     {
-        for (auto it2 = it1 + 1; it2 != entities.end(); ++it2)
+        for (auto it2 = it1 + 1; it2 != objects.end(); it2++)
         {
             if (it1->is_colliding(*it2))
             {
-                // --- 1. POSITIONAL CORRECTION ---
-                // Get the vector pointing from ball 2 to ball 1
                 glm::vec2 delta = it1->position - it2->position;
                 float dist = glm::length(delta);
 
@@ -253,20 +183,17 @@ void resolve_collisions()
                     dist = 1.0f;
                 }
 
-                // Calculate how deeply they are intersecting
-                // (radius * 2) is the minimum distance they should be apart
                 float overlap = (radius * 2.0f) - dist;
-
-                // Normalize delta to get a direction vector of length 1
                 glm::vec2 direction = delta / dist;
 
-                // Push them apart! Each ball moves half the overlap distance.
-                // We add a tiny epsilon (0.001f) just to be absolutely sure they separate
+                // Push them apart
                 it1->position += direction * (overlap * 0.5f + 0.001f);
                 it2->position -= direction * (overlap * 0.5f + 0.001f);
 
-                it1->angle += PI;
-                it2->angle += PI;
+                // Calculate the momentum
+                glm::vec2 temp = it1->position;
+                it1->position = it2->position;
+                it2->position = temp;
 
                 //  Resolve Rock-Paper-Scissors logic
                 if (it1->is_winner(*it2))
@@ -284,16 +211,35 @@ void resolve_collisions()
 
 void update(float dt)
 {
-    resolve_collisions();
-    for (auto& object : entities)
+    int simulation_speed = 1;
+
+    // Run the physics/collision logic multiple times per frame
+    for (int step = 0; step < simulation_speed; step++)
     {
-        object.update_object(dt);
+        for (auto& obj : objects)
+        {
+            obj.update_object(dt);
+        }
+
+        resolve_collisions();
     }
+}
+
+void display(void)
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    for (auto& object : objects)
+    {
+        object.display_object();
+    }
+
+    glFinish();
 }
 
 int main()
 {
-    if (!glfwInit()) return 1;
+    if (!glfwInit()) exit(EXIT_FAILURE);
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
@@ -307,7 +253,7 @@ int main()
     if (!window)
     {
         glfwTerminate();
-        return 1;
+        exit(EXIT_FAILURE);
     }
 
     init();
@@ -315,7 +261,8 @@ int main()
     double frameRate = 30, currentTime, previousTime = 0.0;
     while (!glfwWindowShouldClose(window))
     {
-        glfwPollEvents();  // Handles queued events
+        glfwPollEvents();
+
         currentTime = glfwGetTime();
         float dt = currentTime - previousTime;
         if (dt >= 1 / frameRate)
@@ -330,5 +277,5 @@ int main()
 
     glfwDestroyWindow(window);
     glfwTerminate();
-    return 1;
+    exit(EXIT_SUCCESS);
 }

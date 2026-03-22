@@ -1,5 +1,6 @@
 CMakeFiles/rps.dir/main.cpp.o: \
   /Users/erenkutsal/courses/comp410/rock-paper-scissors/main.cpp \
+  /Users/erenkutsal/courses/comp410/rock-paper-scissors/include.hpp \
   /opt/homebrew/include/GLFW/glfw3.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/stddef.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/__config \
@@ -1181,10 +1182,10 @@ CMakeFiles/rps.dir/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/__random/seed_seq.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/__random/student_t_distribution.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/__random/weibull_distribution.h \
-  /Users/erenkutsal/courses/comp410/rock-paper-scissors/../util/InitShader.h \
+  /Users/erenkutsal/courses/comp410/rock-paper-scissors/../util/init_shader.hpp \
+  /Users/erenkutsal/courses/comp410/rock-paper-scissors/../util/includes.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/istream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/ostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/bitset \
-  /Users/erenkutsal/courses/comp410/rock-paper-scissors/../util/includes.h \
   /Users/erenkutsal/courses/comp410/rock-paper-scissors/../util/my_math.h

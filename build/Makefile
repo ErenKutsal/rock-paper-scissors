@@ -129,30 +129,6 @@ rps/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rps.dir/build.make CMakeFiles/rps.dir/build
 .PHONY : rps/fast
 
-Users/erenkutsal/courses/comp410/util/InitShader.o: Users/erenkutsal/courses/comp410/util/InitShader.cpp.o
-.PHONY : Users/erenkutsal/courses/comp410/util/InitShader.o
-
-# target to build an object file
-Users/erenkutsal/courses/comp410/util/InitShader.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/rps.dir/build.make CMakeFiles/rps.dir/Users/erenkutsal/courses/comp410/util/InitShader.cpp.o
-.PHONY : Users/erenkutsal/courses/comp410/util/InitShader.cpp.o
-
-Users/erenkutsal/courses/comp410/util/InitShader.i: Users/erenkutsal/courses/comp410/util/InitShader.cpp.i
-.PHONY : Users/erenkutsal/courses/comp410/util/InitShader.i
-
-# target to preprocess a source file
-Users/erenkutsal/courses/comp410/util/InitShader.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/rps.dir/build.make CMakeFiles/rps.dir/Users/erenkutsal/courses/comp410/util/InitShader.cpp.i
-.PHONY : Users/erenkutsal/courses/comp410/util/InitShader.cpp.i
-
-Users/erenkutsal/courses/comp410/util/InitShader.s: Users/erenkutsal/courses/comp410/util/InitShader.cpp.s
-.PHONY : Users/erenkutsal/courses/comp410/util/InitShader.s
-
-# target to generate assembly for a file
-Users/erenkutsal/courses/comp410/util/InitShader.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/rps.dir/build.make CMakeFiles/rps.dir/Users/erenkutsal/courses/comp410/util/InitShader.cpp.s
-.PHONY : Users/erenkutsal/courses/comp410/util/InitShader.cpp.s
-
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -186,9 +162,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... rps"
-	@echo "... Users/erenkutsal/courses/comp410/util/InitShader.o"
-	@echo "... Users/erenkutsal/courses/comp410/util/InitShader.i"
-	@echo "... Users/erenkutsal/courses/comp410/util/InitShader.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

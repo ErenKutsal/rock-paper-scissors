@@ -85,12 +85,12 @@ clean: CMakeFiles/rps.dir/clean
 CMakeFiles/rps.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rps.dir/build.make CMakeFiles/rps.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rps.dir/build.make CMakeFiles/rps.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/erenkutsal/courses/comp410/rock-paper-scissors/build/CMakeFiles --progress-num=1,2,3 "Built target rps"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/erenkutsal/courses/comp410/rock-paper-scissors/build/CMakeFiles --progress-num=1,2 "Built target rps"
 .PHONY : CMakeFiles/rps.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/rps.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/erenkutsal/courses/comp410/rock-paper-scissors/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/erenkutsal/courses/comp410/rock-paper-scissors/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/rps.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/erenkutsal/courses/comp410/rock-paper-scissors/build/CMakeFiles 0
 .PHONY : CMakeFiles/rps.dir/rule
@@ -102,7 +102,7 @@ rps: CMakeFiles/rps.dir/rule
 # codegen rule for target.
 CMakeFiles/rps.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rps.dir/build.make CMakeFiles/rps.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/erenkutsal/courses/comp410/rock-paper-scissors/build/CMakeFiles --progress-num=1,2,3 "Finished codegen for target rps"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/erenkutsal/courses/comp410/rock-paper-scissors/build/CMakeFiles --progress-num=1,2 "Finished codegen for target rps"
 .PHONY : CMakeFiles/rps.dir/codegen
 
 # clean rule for target.

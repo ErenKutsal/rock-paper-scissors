@@ -1,6 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/rps.dir/Users/erenkutsal/courses/comp410/util/InitShader.cpp.o"
-  "CMakeFiles/rps.dir/Users/erenkutsal/courses/comp410/util/InitShader.cpp.o.d"
   "CMakeFiles/rps.dir/main.cpp.o"
   "CMakeFiles/rps.dir/main.cpp.o.d"
   "rps"

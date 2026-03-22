@@ -8,7 +8,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/erenkutsal/courses/comp410/util/InitShader.cpp" "CMakeFiles/rps.dir/Users/erenkutsal/courses/comp410/util/InitShader.cpp.o" "gcc" "CMakeFiles/rps.dir/Users/erenkutsal/courses/comp410/util/InitShader.cpp.o.d"
   "/Users/erenkutsal/courses/comp410/rock-paper-scissors/main.cpp" "CMakeFiles/rps.dir/main.cpp.o" "gcc" "CMakeFiles/rps.dir/main.cpp.o.d"
   )
 

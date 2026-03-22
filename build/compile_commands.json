@@ -4,11 +4,5 @@
   "command": "/usr/bin/clang++  -I/Users/erenkutsal/courses/comp410/rock-paper-scissors/../util -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk/System/Library/Frameworks -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -o CMakeFiles/rps.dir/main.cpp.o -c /Users/erenkutsal/courses/comp410/rock-paper-scissors/main.cpp",
   "file": "/Users/erenkutsal/courses/comp410/rock-paper-scissors/main.cpp",
   "output": "CMakeFiles/rps.dir/main.cpp.o"
-},
-{
-  "directory": "/Users/erenkutsal/courses/comp410/rock-paper-scissors/build",
-  "command": "/usr/bin/clang++  -I/Users/erenkutsal/courses/comp410/rock-paper-scissors/../util -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk/System/Library/Frameworks -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -o CMakeFiles/rps.dir/Users/erenkutsal/courses/comp410/util/InitShader.cpp.o -c /Users/erenkutsal/courses/comp410/util/InitShader.cpp",
-  "file": "/Users/erenkutsal/courses/comp410/util/InitShader.cpp",
-  "output": "CMakeFiles/rps.dir/Users/erenkutsal/courses/comp410/util/InitShader.cpp.o"
 }
 ]

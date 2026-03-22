@@ -14,7 +14,6 @@ find_package(glm REQUIRED)
 # Note: If your main file is not named 'main.cpp', change it here!
 add_executable(rps 
     main.cpp 
-    ../util/InitShader.cpp
 )
 
 # Tell the compiler where to find headers like "InitShader.h"
