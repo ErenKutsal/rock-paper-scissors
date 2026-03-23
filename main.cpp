@@ -3,7 +3,7 @@
 const float PI = glm::pi<float>();
 int simulation_speed = 1;
 
-const float radius = 0.01f;
+const float radius = 0.005f;
 const int circle_segments = 32;
 const int num_vertices = circle_segments + 2;
 glm::vec3 vertices[num_vertices];
@@ -12,7 +12,7 @@ GLuint vao, vbo;
 GLuint program;
 GLint mvp_loc, color_loc;
 
-const int GROUP_SIZE = 100;
+const int GROUP_SIZE = 200;
 const int NO_OBJECTS = 3 * GROUP_SIZE;
 std::vector<Object> objects;
 
@@ -36,16 +36,16 @@ void generate_circle()
     }
 }
 
+static std::random_device rd;
+static std::mt19937 gen(rd());
+std::uniform_real_distribution<float> dist(0.0f, 1.0f);
+
 typedef enum
 {
     ROCK = 0,
     PAPER = 1,
     SCISSORS = 2
 } Type;
-
-static std::random_device rd;
-static std::mt19937 gen(rd());
-std::uniform_real_distribution<float> dist(0.0f, 1.0f);
 
 struct Object
 {
@@ -236,6 +236,17 @@ void display(void)
     glFinish();
 }
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    switch (key)
+    {
+        case GLFW_KEY_ESCAPE:
+        case GLFW_KEY_Q:
+            exit(EXIT_SUCCESS);
+            break;
+    }
+}
+
 int main()
 {
     if (!glfwInit()) exit(EXIT_FAILURE);
@@ -255,9 +266,11 @@ int main()
         exit(EXIT_FAILURE);
     }
 
+    glfwSetKeyCallback(window, key_callback);
+
     init();
 
-    double frameRate = 30, currentTime, previousTime = 0.0;
+    double frameRate = 60, currentTime, previousTime = 0.0;
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
